@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #undef debug_parse
 #undef debug_opti1
@@ -637,7 +638,7 @@ int resolve_abs(char *a)
 
 int parse_line(char *a, line *p)
 {
-  static int i,j,x,y;
+  static int i,j,x;
 
   p->tok=null_tok;
   p->dep=0;
@@ -1392,8 +1393,6 @@ void reglistout(int map)
 int try_sim2(int i, int j)
 {
   int j_end,x,y;
-  int hlp;
-  int flag;
   int A_dep,A_mod,A_feeds,rest_dep;
   int B_dep,B_mod,Brest_dep;
 
@@ -1974,11 +1973,11 @@ void add_line(line *p)
   blkbuf_len++;
 
 # ifdef debug_parse
-  printf("line %i added tok=%i\n",blkbuf_len-1,blkbuf[blkbuf_len-1]);
+  printf("line %i added tok=%i\n",blkbuf_len-1,blkbuf[blkbuf_len-1].tok);
 # endif
 }
 
-optimize_block()
+void optimize_block()
 {
   int i;
 
@@ -2033,7 +2032,7 @@ optimize_block()
 
 /*********************************************************************/
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char linebuf[line_len];
   line tmp;
